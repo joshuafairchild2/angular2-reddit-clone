@@ -14,10 +14,11 @@ import { FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/d
 
 export class PostComponent implements OnInit {
   selectedPostObservable: FirebaseObjectObservable<any>;
-  selectedPost;
+  selectedPost: any;
   selectedPostComments: FirebaseListObservable<any[]>;
   selectedPostId: string = null;
   selectedPostSubreddit: string = null;
+  selectedSubId: string = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +29,7 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.forEach(urlParam => {
       this.selectedPostId = urlParam['postId'];
+      this.selectedSubId = urlParam['id'];
     });
 
     this.selectedPostObservable = this.subredditService.getPostById(this.selectedPostId);
@@ -41,5 +43,9 @@ export class PostComponent implements OnInit {
 
   formSubmit(comment: string) {
     this.selectedPostComments.push(comment);
+  }
+
+  deleteButtonClicked(selectedPost: any){
+    this.subredditService.deletePost(selectedPost.$key, this.selectedSubId);
   }
 }

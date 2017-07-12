@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subreddit } from './subreddit.model';
 import { UserPost } from './user-post.model';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Injectable()
 export class SubredditService {
@@ -11,7 +11,8 @@ export class SubredditService {
 
   constructor(
     private database: AngularFireDatabase,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.subreddits = database.list('subreddits');
     this.posts = database.list('posts');
@@ -49,7 +50,6 @@ export class SubredditService {
     const postToAdd: UserPost = new UserPost(postTitle, postContent, ['first']);
     const newItem = this.posts.push(postToAdd);
     const newPostKey = newItem.key;
-    const targetSubPosts = this.getSubredditPosts(targetSubredditId);
     this.database.object(`subreddits/${targetSubredditId}/userPosts`).update({[newPostKey]: true})
   }
 
@@ -60,5 +60,15 @@ export class SubredditService {
 
   getPostComments(postId: string) {
     return this.database.list(`posts/${postId}/comments`);
+  }
+
+  //
+  deletePost(postId: string, subredditId: string): void {
+    const postToDelete: FirebaseObjectObservable<any> = this.getPostById(postId);
+    postToDelete.remove();
+
+    this.database.object(`subreddits/${subredditId}/userPosts/${postId}`).remove();
+
+    this.router.navigate([`subreddits`, subredditId]);
   }
 }
