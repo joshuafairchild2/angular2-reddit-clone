@@ -1,4 +1,4 @@
-<h1 class="text-center jumbotron">{{subredditTitle}}</h1>
+<h1 class="text-center jumbotron">{{subredditTitle}} <button class="btn btn-xs" (click)='deleteSubredditButtonClicked(subredditId)'>Delete this subreddit</button></h1>
 
 <div *ngFor='let post of posts' class="panel panel-danger">
   <a routerLink='/subreddits/{{subredditId}}/{{post.$key}}'><h2 class="panel-body">{{post.postTitle}}</h2></a>
@@ -13,4 +13,4 @@
   <label>Content:</label>
   <textarea #postContent type="text" class="form-control"></textarea>
 </div>
-<button type="button" class="btn btn-primary" (click)='formPostSubmit(postTitle.value, postContent.value); postTitle.value=""; postContent.value="";'>Post</button>
+<button type="button" class="btn btn-primary" (click)='newPostSubmit(postTitle.value, postContent.value); postTitle.value=""; postContent.value="";'>Post</button>

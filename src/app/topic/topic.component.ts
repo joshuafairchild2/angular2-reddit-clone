@@ -41,7 +41,11 @@ export class TopicComponent implements OnInit {
     this.subredditService.getSubredditById(this.subredditId).subscribe(sub => this.subredditTitle = sub.title);
   }
 
-  formPostSubmit(postTitle: string, postContent: string): void {
+  newPostSubmit(postTitle: string, postContent: string): void {
     this.subredditService.addPost(postTitle, postContent, this.subredditId);
+  }
+
+  deleteSubredditButtonClicked(subId: string): void {
+    this.subredditService.deleteSubreddit(subId);
   }
 }

@@ -76,4 +76,22 @@ export class SubredditService {
     const newSubreddit = new Subreddit(title, []);
     this.subreddits.push(newSubreddit);
   }
+
+  deleteSubreddit(subId: string): void {
+    const subToDelete = this.getSubredditById(subId);
+    const postsToDelete = this.getSubredditPosts(subId);
+
+    postsToDelete.subscribe(data => {
+      data.forEach(post => {
+        console.log(post.$key)
+        this.database.object(`posts/${post.$key}`).remove();
+      });
+    });
+
+    subToDelete.remove();
+
+    //need to also delete all posts in this subId
+
+    this.router.navigate([``]);
+  }
 }
