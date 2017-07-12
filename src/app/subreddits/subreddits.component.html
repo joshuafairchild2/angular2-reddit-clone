@@ -1,3 +1,8 @@
 <div class="well" *ngFor='let subreddit of subreddits | async'>
   <h1 class="text-center"><a routerLink='subreddits/{{subreddit.$key}}'>er/{{subreddit.title}}</a></h1>
 </div>
+<div class="form-group">
+  <label>Add new Subreddit</label>
+  <input #subredditTitle type="text" class="form-control">
+</div>
+<button type="button" class="btn btn-primary" (click)='subredditAdded(subredditTitle.value); subredditTitle.value="";'>Add Subreddit</button>

@@ -23,4 +23,8 @@ export class SubredditsComponent implements OnInit {
   ngOnInit(): void {
     this.subreddits = this.subredditService.getSubreddits();
   }
+
+  subredditAdded(subredditTitle: string): void {
+    this.subredditService.addSubreddit(subredditTitle);
+  }
 }

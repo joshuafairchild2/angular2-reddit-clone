@@ -71,4 +71,9 @@ export class SubredditService {
 
     this.router.navigate([`subreddits`, subredditId]);
   }
+
+  addSubreddit(title: string): void {
+    const newSubreddit = new Subreddit(title, []);
+    this.subreddits.push(newSubreddit);
+  }
 }

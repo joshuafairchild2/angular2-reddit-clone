@@ -3,6 +3,9 @@
 <div *ngFor='let post of posts' class="panel panel-danger">
   <a routerLink='/subreddits/{{subredditId}}/{{post.$key}}'><h2 class="panel-body">{{post.postTitle}}</h2></a>
 </div>
+<div *ngIf='!posts.length'>
+  <h2 class="panel-body text-center">There are no posts in this subreddit.</h2>
+</div>
 <h3 class="text-center">Add a new Post:</h3>
 <div class="form-group">
   <label>New Post Title:</label>

@@ -3,7 +3,7 @@
   <h2>{{selectedPost.postTitle}}</h2>
   <hr>
   <h3>{{selectedPost.description}}</h3>
-  <button type="button" name="delete" (click)='deleteButtonClicked(selectedPost)'>Delete this post</button>
+  <button type="button" name="delete" (click)='deleteButtonClicked(selectedPost)' class="btn">Delete this post</button>
 </div>
 <h3 class="text-center">Comments:</h3>
 <div *ngFor="let comment of selectedPostComments | async" class="panel panel-danger">
