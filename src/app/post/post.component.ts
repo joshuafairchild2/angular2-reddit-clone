@@ -13,12 +13,13 @@ import { FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/d
 })
 
 export class PostComponent implements OnInit {
-  selectedPostObservable: FirebaseObjectObservable<any>;
-  selectedPost: any;
+  selectedPost: FirebaseObjectObservable<any>;
+  localSelectedPost: any;
   selectedPostComments: FirebaseListObservable<any[]>;
   selectedPostId: string = null;
-  selectedPostSubreddit: string = null;
   selectedSubId: string = null;
+  selectedPostSubreddit: string = null;
+  editingPost: FirebaseObjectObservable<any> = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,20 +33,33 @@ export class PostComponent implements OnInit {
       this.selectedSubId = urlParam['id'];
     });
 
-    this.selectedPostObservable = this.subredditService.getPostById(this.selectedPostId);
+    this.selectedPost = this.subredditService.getPostById(this.selectedPostId);
 
-    this.selectedPostObservable.subscribe(post => this.selectedPost = post);
+    this.selectedPost.subscribe(data => {
+      this.localSelectedPost = data;
+    });
 
     this.selectedPostComments = this.subredditService.getPostComments(this.selectedPostId);
 
     this.subredditService.getSubredditTitleFromUrl().subscribe(title => {this.selectedPostSubreddit = title.$value});
   }
 
-  formSubmit(comment: string) {
+  formSubmit(comment: string): void {
     this.selectedPostComments.push(comment);
   }
 
-  deleteButtonClicked(selectedPost: any){
-    this.subredditService.deletePost(selectedPost.$key, this.selectedSubId);
+  deleteButtonClicked(thisPost: FirebaseObjectObservable<any>): void {
+    thisPost.subscribe(data => {
+      this.subredditService.deletePost(data.$key, this.selectedSubId);
+    });
+  }
+
+  beginEditing(postToEdit: any): void {
+    this.editingPost = postToEdit;
+  }
+
+  stopEditing(postToSave: any): void {
+    this.editingPost = null;
+    this.subredditService.savePostChanges(postToSave)
   }
 }

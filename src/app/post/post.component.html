@@ -1,9 +1,21 @@
 <h1 class="text-center jumbotron">{{selectedPostSubreddit}}</h1>
 <div class="well">
-  <h2>{{selectedPost.postTitle}}</h2>
+  <h2>{{localSelectedPost.postTitle}}</h2>
   <hr>
-  <h3>{{selectedPost.description}}</h3>
-  <button type="button" name="delete" (click)='deleteButtonClicked(selectedPost)' class="btn">Delete this post</button>
+  <h3>{{localSelectedPost.description}}</h3>
+  <button (click)='deleteButtonClicked(selectedPost)' class="btn">Delete this post</button>
+  <hr>
+  <button *ngIf='!editingPost' (click)='beginEditing(localSelectedPost)' class="btn">Edit post</button>
+  <div *ngIf='editingPost'>
+    <h4>Editing post "{{(selectedPost | async)?.postTitle}}"</h4>
+    <div class="form-group">
+      <label>Title:</label>
+      <input [(ngModel)]="localSelectedPost.postTitle" type="text" class="form-control">
+      <label>Content:</label>
+      <textarea [(ngModel)]='localSelectedPost.description' type="text" class="form-control"></textarea>
+    </div>
+    <button (click)='stopEditing(localSelectedPost)' class="btn">Save changes</button>
+  </div>
 </div>
 <h3 class="text-center">Comments:</h3>
 <div *ngFor="let comment of selectedPostComments | async" class="panel panel-danger">

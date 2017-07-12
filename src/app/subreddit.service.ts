@@ -62,7 +62,6 @@ export class SubredditService {
     return this.database.list(`posts/${postId}/comments`);
   }
 
-  //
   deletePost(postId: string, subredditId: string): void {
     const postToDelete: FirebaseObjectObservable<any> = this.getPostById(postId);
     postToDelete.remove();
@@ -90,8 +89,12 @@ export class SubredditService {
 
     subToDelete.remove();
 
-    //need to also delete all posts in this subId
-
     this.router.navigate([``]);
+  }
+
+  savePostChanges(localPost: any): void {
+    const postToEdit = this.getPostById(localPost.$key);
+    postToEdit.update({postTitle: localPost.postTitle,
+                      description: localPost.description });
   }
 }
