@@ -41,7 +41,7 @@ export class PostComponent implements OnInit {
 
     this.selectedPostComments = this.subredditService.getPostComments(this.selectedPostId);
 
-    this.subredditService.getSubredditTitleFromUrl().subscribe(title => {this.selectedPostSubreddit = title.$value});
+    this.subredditService.getSubredditTitleFromUrl().subscribe(title => this.selectedPostSubreddit = title.$value);
   }
 
   formSubmit(comment: string): void {
@@ -60,6 +60,6 @@ export class PostComponent implements OnInit {
 
   stopEditing(postToSave: any): void {
     this.editingPost = null;
-    this.subredditService.savePostChanges(postToSave)
+    this.subredditService.savePostChanges(postToSave);
   }
 }

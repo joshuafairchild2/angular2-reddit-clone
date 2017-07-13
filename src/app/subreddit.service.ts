@@ -50,7 +50,7 @@ export class SubredditService {
     const postToAdd: UserPost = new UserPost(postTitle, postContent, ['first']);
     const newItem = this.posts.push(postToAdd);
     const newPostKey = newItem.key;
-    this.database.object(`subreddits/${targetSubredditId}/userPosts`).update({[newPostKey]: true})
+    this.database.object(`subreddits/${targetSubredditId}/userPosts`).update({[newPostKey]: true});
   }
 
   // post service
@@ -82,7 +82,6 @@ export class SubredditService {
 
     postsToDelete.subscribe(data => {
       data.forEach(post => {
-        console.log(post.$key)
         this.database.object(`posts/${post.$key}`).remove();
       });
     });

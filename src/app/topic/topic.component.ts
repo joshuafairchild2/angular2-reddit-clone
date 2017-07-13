@@ -32,7 +32,7 @@ export class TopicComponent implements OnInit {
     this.postListObservable = this.subredditService.getSubredditPosts(this.subredditId);
 
     this.postListObservable.subscribe(data => {
-      this.posts = []
+      this.posts = [];
       data.forEach(postReference => {
         this.subredditService.getPostById(postReference.$key).subscribe(post => this.posts.push(post));
       });

@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { SubredditsComponent } from './subreddits/subreddits.component';
 import { TopicComponent } from './topic/topic.component';
 import { PostComponent } from './post/post.component';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { masterFirebaseConfig } from './api-keys';
 
 export const firebaseConfig = {
@@ -24,7 +25,7 @@ export const firebaseConfig = {
     AppComponent,
     SubredditsComponent,
     TopicComponent,
-    PostComponent
+    PostComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +33,8 @@ export const firebaseConfig = {
     HttpModule,
     routing,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
