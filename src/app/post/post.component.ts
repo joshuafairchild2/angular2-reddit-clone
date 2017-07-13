@@ -4,6 +4,7 @@ import { SubredditService } from './../subreddit.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-post',
@@ -20,6 +21,7 @@ export class PostComponent implements OnInit {
   selectedSubId: string = null;
   selectedPostSubreddit: string = null;
   editingPost: FirebaseObjectObservable<any> = null;
+  user;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,6 +44,10 @@ export class PostComponent implements OnInit {
     this.selectedPostComments = this.subredditService.getPostComments(this.selectedPostId);
 
     this.subredditService.getSubredditTitleFromUrl().subscribe(title => this.selectedPostSubreddit = title.$value);
+  }
+
+  ngDoCheck(): void {
+    this.user = firebase.auth().currentUser;
   }
 
   formSubmit(comment: string): void {

@@ -6,9 +6,9 @@
   <h2>{{localSelectedPost.postTitle}}</h2>
   <hr>
   <h3>{{localSelectedPost.description}}</h3>
-  <button (click)='deleteButtonClicked(selectedPost)' class="btn">Delete this post</button>
+  <button *ngIf='user' (click)='deleteButtonClicked(selectedPost)' class="btn">Delete this post</button>
   <hr>
-  <button *ngIf='!editingPost' (click)='beginEditing(localSelectedPost)' class="btn">Edit post</button>
+  <button *ngIf='!editingPost && user' (click)='beginEditing(localSelectedPost)' class="btn">Edit post</button>
   <div *ngIf='editingPost'>
     <h4>Editing post "{{(selectedPost | async)?.postTitle}}"</h4>
     <div class="form-group">
@@ -26,8 +26,10 @@
     {{comment.$value}}
   </div>
 </div>
-<div class="form-group">
-  <label>Add comment</label>
-  <input #commentInput type="text" class="form-control">
+<div *ngIf='user'>
+  <div class="form-group">
+    <label>Add comment</label>
+    <input #commentInput type="text" class="form-control">
+  </div>
+  <button type="button" class="btn btn-primary" (click)='formSubmit(commentInput.value); commentInput.value="";'>Post Comment</button>
 </div>
-<button type="button" class="btn btn-primary" (click)='formSubmit(commentInput.value); commentInput.value="";'>Post Comment</button>

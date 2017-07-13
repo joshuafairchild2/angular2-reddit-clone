@@ -4,6 +4,7 @@ import { SubredditService } from './../subreddit.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-topic',
@@ -17,6 +18,7 @@ export class TopicComponent implements OnInit {
   subredditTitle: FirebaseObjectObservable<any>;
   postListObservable: FirebaseListObservable<any[]>;
   posts = [];
+  user;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +41,10 @@ export class TopicComponent implements OnInit {
     });
 
     this.subredditService.getSubredditById(this.subredditId).subscribe(sub => this.subredditTitle = sub.title);
+  }
+
+  ngDoCheck(): void {
+    this.user = firebase.auth().currentUser;
   }
 
   newPostSubmit(postTitle: string, postContent: string): void {

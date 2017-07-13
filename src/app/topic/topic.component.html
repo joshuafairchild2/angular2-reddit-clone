@@ -1,7 +1,7 @@
 <h1 class="text-center jumbotron">{{subredditTitle}}</h1>
 
-<h3 class="text-center">Add a new Post:</h3>
-<div class="form-group">
+<div *ngIf='user' class="form-group">
+  <h3 class="text-center">Add a new Post:</h3>
   <label>New Post Title:</label>
   <input #postTitle type="text" class="form-control">
   <label>Content:</label>
@@ -17,4 +17,4 @@
   <h2 class="panel-body text-center">There are no posts in this subreddit.</h2>
 </div>
 
-<button class="btn btn-xs btn-danger" (click)='deleteSubredditButtonClicked(subredditId)'>Delete this subreddit</button>
+<button *ngIf='user' class="btn btn-xs btn-danger" (click)='deleteSubredditButtonClicked(subredditId)'>Delete this subreddit</button>

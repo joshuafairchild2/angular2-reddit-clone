@@ -11,8 +11,8 @@ import { Observable } from 'rxjs/Observable';
 
 export class AppComponent {
   user: Observable<firebase.User>;
-  isLoggedIn: boolean;
-  userName: string;
+  private isLoggedIn: boolean;
+  private userName: string;
 
   constructor(
     public authService: AuthenticationService
