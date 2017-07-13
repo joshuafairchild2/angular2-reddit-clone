@@ -46,6 +46,8 @@ export class TopicComponent implements OnInit {
   }
 
   deleteSubredditButtonClicked(subId: string): void {
-    this.subredditService.deleteSubreddit(subId);
+    if(confirm("Are you sure you want to delete this subreddit?")){
+      this.subredditService.deleteSubreddit(subId);
+    }
   }
 }

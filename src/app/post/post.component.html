@@ -1,4 +1,7 @@
 <h1 class="text-center jumbotron">{{selectedPostSubreddit}}</h1>
+<div class="form-group">
+  <button routerLink="/subreddits/{{selectedSubId}}" class="btn btn-primary">Back to {{selectedPostSubreddit}}</button>
+</div>
 <div class="well">
   <h2>{{localSelectedPost.postTitle}}</h2>
   <hr>
